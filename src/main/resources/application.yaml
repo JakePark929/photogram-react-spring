@@ -1,1 +1,23 @@
+server:
+  port: 9000
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
 
+spring:
+  # db setting
+  datasource:
+    url: jdbc:mysql://localhost:3306/photo
+    username: jake
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # jpa setting
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
