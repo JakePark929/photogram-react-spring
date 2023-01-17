@@ -141,9 +141,9 @@ button {
     font-size: 15px;
 }
 /*페이스북 로그인 색깔*/
-.login__facebook button i,
-span {
+.login__facebook button span {
     color: #385185;
+    margin-left: 4px;
 }
 
 /*가입페이지로 이동*/
@@ -160,7 +160,7 @@ span {
 }
 
 /*가입페이지 이동버튼*/
-.login__register text {
+.login__register label {
     color: #0095f6;
     margin-left: 6px;
 }

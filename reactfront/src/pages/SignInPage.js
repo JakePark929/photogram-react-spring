@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style.css';
+import './style.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook} from "@fortawesome/free-brands-svg-icons";
 import {Link} from "react-router-dom";
@@ -27,7 +27,7 @@ const SignInPage = () => {
 
                             <div className="login__facebook">
                                 <button>
-                                    <FontAwesomeIcon icon={faFacebook} /> &nbsp;
+                                    <FontAwesomeIcon icon={faFacebook} />
                                     <span>Facebook으로 로그인</span>
                                 </button>
                             </div>
@@ -36,7 +36,7 @@ const SignInPage = () => {
                         <div className="login__register">
                             <span>계정이 없으신가요?</span>
                             <Link to={"/auth/sign-up"} style={{textDecoration: 'none'}}>
-                                <text>가입하기</text>
+                                <label>가입하기</label>
                             </Link>
                         </div>
                     </article>
