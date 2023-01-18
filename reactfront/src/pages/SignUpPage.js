@@ -23,16 +23,8 @@ const SignUpPage = () => {
             body: JSON.stringify(user)
         })
             .then(res => {
-                console.log(1, res)
-                if (res.status === 201) {
-                    return null;
-                } else {
-                    return null;
-                }
-            })
-            .then(res => { // Catch는 여기서 오류가 나야 실행됨
-                console.log("정상", res);
-                if (res !== null) {
+                console.log(1, res);
+                if (res.status === 200) {
                     alert("회원가입에 성공하였습니다.");
                     navigate("/auth/sign-in");
                 } else {
@@ -51,10 +43,10 @@ const SignUpPage = () => {
                             <h1><img src="/images/logo.jpg"/></h1>
 
                             <form className="login__input" onSubmit={signUp}>
-                                <input type="text" name="username" placeholder="유저네임"/>
-                                <input type="password" name="password" placeholder="비밀번호"/>
-                                <input type="email" name="email" placeholder="이메일"/>
-                                <input type="text" name="name" placeholder="이름"/>
+                                <input type="text" name="username" placeholder="유저네임" required="required" maxLength={20}/>
+                                <input type="password" name="password" placeholder="비밀번호" required="required"/>
+                                <input type="email" name="email" placeholder="이메일" required="required"/>
+                                <input type="text" name="name" placeholder="이름" required="required"/>
                                 <button type="submit">가입</button>
                             </form>
                         </div>
