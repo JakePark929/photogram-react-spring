@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './Sign.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook} from "@fortawesome/free-brands-svg-icons";
 import {Link, useNavigate} from "react-router-dom";

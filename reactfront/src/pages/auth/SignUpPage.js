@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './Sign.css';
 import {Link, useNavigate} from "react-router-dom";
 
 const SignUpPage = () => {
