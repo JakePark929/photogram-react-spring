@@ -23,7 +23,7 @@ const Header = () => {
                                 <FontAwesomeIcon icon={faCompass} onClick={() => navigate("/image/popular")} style={{cursor:"pointer"}}/>
                             </li>
                             <li className="navi-item">
-                                <FontAwesomeIcon icon={faUser} onClick={() => navigate("/user/profile")} style={{cursor:"pointer"}}/>
+                                <FontAwesomeIcon icon={faUser} onClick={() => navigate("/user/"+1)} style={{cursor:"pointer"}}/>
                             </li>
                         </ul>
                     </nav>
