@@ -60,7 +60,7 @@
 .profile .profile-right .name-group .cta {
   margin-right: 10px;
   padding: 5px 9px;
-  border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+  border: 1px solid rgba(219, 219, 219, 1);
   border-radius: 4px;
   color: #262626;
   font-weight: bold;
@@ -151,7 +151,7 @@
   align-items: center;
 }
 .gallery .profileContainer .controller .con-list a {
-  color: rgba(var(--f52, 142, 142, 142), 1);
+  color: rgba(142, 142, 142, 1);
   display: inline-block;
   height: 100%;
 }
@@ -379,7 +379,7 @@
 .cta {
   margin-right: 10px;
   padding: 10px 10px;
-  border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+  border: 1px solid rgba(219, 219, 219, 1);
   border-radius: 4px;
   color: #262626;
   font-weight: bold;
@@ -392,11 +392,11 @@
 
 .modal-info {
   position: fixed;
-  top: 0;
-  left: 0;
+  padding-top: 12%;
+  left: -3%;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.001);
   display: none;
   align-items: center;
   justify-content: center;
@@ -410,6 +410,7 @@
 }
 .modal-info .modal button {
   border: 0;
+  color: black;
   background-color: transparent;
   height: 48px;
   cursor: pointer;

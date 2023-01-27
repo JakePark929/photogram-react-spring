@@ -2,6 +2,7 @@ package com.jake.photogram.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class IndexController {
@@ -13,9 +14,6 @@ public class IndexController {
         return "/index.html";
     }
 
-    @GetMapping({"/image/popular"})
+    @GetMapping("/image/popular")
     public String PopularPage() { return "/index.html"; }
-
-    @GetMapping({ "/user/profile"})
-    public String ProfilePage() { return "/index.html"; }
 }
