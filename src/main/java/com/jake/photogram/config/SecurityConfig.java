@@ -15,9 +15,9 @@ public class SecurityConfig {
         return http
                 .csrf().disable() // postman 등의 요청에서 토큰값을 확인하는 설정
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(
-//                                "/", "/user/**", "image/**", "/subscribe/**", "comment/**"
-//                        ).authenticated()
+                        .requestMatchers(
+                                "/", "/user/**", "image/**", "/subscribe/**", "comment/**"
+                        ).authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin()
