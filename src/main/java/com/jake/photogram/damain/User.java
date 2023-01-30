@@ -21,13 +21,13 @@ public class User {
     @Setter @Column(nullable = false) private String password;
 
     @Setter @Column(nullable = false) private String name;
-    @Setter private String website;
-    @Setter private String bio;
     @Setter @Column(nullable = false) private String email;
     @Setter private String phone;
     @Setter private String gender;
-
+    @Setter private String website;
+    @Setter private String bio;
     @Setter private String profileImageUrl;
+
     @Setter private String role;
     private LocalDateTime createDate;
 

@@ -48,6 +48,7 @@
 }
 .setting-container .setting__content .content-item__01 .item__username {
     flex: 4;
+    text-align: left;
 }
 .setting-container .setting__content .content-item__01 .item__btn h2 {
     font-size: 18px;
