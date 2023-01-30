@@ -3,7 +3,7 @@ import './Profile.css'
 import {useNavigate} from "react-router-dom";
 import {faCog, faHeart} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Button, Modal} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 
 const ProfilePage = () => {
     const navigate = useNavigate();
