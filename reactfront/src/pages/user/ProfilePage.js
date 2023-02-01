@@ -1,16 +1,32 @@
 import React, {useState} from 'react';
 import './Profile.css'
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {faCog, faHeart} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Modal} from "react-bootstrap";
+import {useSelector} from "react-redux";
 
 const ProfilePage = () => {
+    const {ip, port} = useSelector((store) => store);
     const navigate = useNavigate();
+    const url = useLocation().pathname;
+    const id = url.substring(url.lastIndexOf("/")+1);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const logout =() => {
+        fetch(ip + port + "/logout", {
+            method: "GET",
+        })
+            .then(res => {
+                console.log(1, res)
+                if (res.status === 200) {
+                    navigate("/auth/sign-in");
+                }
+            })
+    }
 
     return (
         <>
@@ -99,10 +115,10 @@ const ProfilePage = () => {
             {/*모달*/}
             <Modal className="modal-info" size="sm" show={show} onHide={handleClose}>
                 <Modal.Body className="modal">
-                    <button onClick={() => navigate("/user/" + 1 + "/update")}>
+                    <button onClick={() => navigate("/user/" + id + "/update")}>
                         회원정보변경
                     </button>
-                    <button>
+                    <button onClick={logout}>
                         로그아웃
                     </button>
                     <button onClick={handleClose}>

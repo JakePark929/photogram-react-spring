@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Update.css';
 import {useSelector} from "react-redux";
-import {json, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const UpdatePage = () => {
     const navigate = useNavigate();

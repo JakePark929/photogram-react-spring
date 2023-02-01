@@ -1,6 +1,7 @@
 package com.jake.photogram.handler;
 
 import com.jake.photogram.dto.ExceptionResponse;
+import com.jake.photogram.handler.ex.CustomApiException;
 import com.jake.photogram.handler.ex.CustomValidationApiException;
 import com.jake.photogram.handler.ex.CustomValidationException;
 import com.jake.photogram.util.Script;
@@ -23,5 +24,10 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CustomValidationApiException.class)
     public ResponseEntity<ExceptionResponse<?>> validationApiException(CustomValidationApiException e) {
         return new ResponseEntity<>(new ExceptionResponse<>(-1, e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomApiException.class)
+    public ResponseEntity<ExceptionResponse<?>> apiException(CustomApiException e) {
+        return new ResponseEntity<>(new ExceptionResponse<>(-1, e.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
 }

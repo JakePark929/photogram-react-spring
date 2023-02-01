@@ -29,6 +29,7 @@ public class User {
     @Setter private String profileImageUrl;
 
     @Setter private String role;
+
     private LocalDateTime createDate;
 
     @PrePersist // DB Insert 직전에 실행
