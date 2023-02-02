@@ -71,7 +71,7 @@ const SignInPage = () => {
                         <div className="login__register">
                             <span>계정이 없으신가요?</span>
                             <Link to={"/auth/sign-up"} style={{textDecoration: 'none'}}>
-                                <label>가입하기</label>
+                                <label style={{cursor:"pointer"}}>가입하기</label>
                             </Link>
                         </div>
                     </article>

@@ -28,8 +28,8 @@ const MainPage = () => {
                 <Route path="/" exact={true} element={<StoryPage/>}/>
                 <Route path="/image/story" exact={true} element={<StoryPage/>}/>
                 <Route path="/image/popular" exact={true} element={<PopularPage/>}/>
-                <Route path="/image/upload" exact={true} element={<UploadPage/>}/>
-                <Route path={"/user/" + user.id} exact={true} user={user} element={<ProfilePage/>}/>
+                <Route path="/image/upload" exact={true} element={<UploadPage id={user.id}/>}/>
+                <Route path={"/user/" + user.id} exact={true} element={<ProfilePage/>}/>
                 <Route path={"/user/" + user.id + "/update"} exact={true} element={<UpdatePage/>}/>
             </Routes>
         </div>
