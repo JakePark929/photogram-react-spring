@@ -2,14 +2,12 @@ package com.jake.photogram.service;
 
 import com.jake.photogram.damain.User;
 import com.jake.photogram.dto.req.UserUpdateRequest;
-import com.jake.photogram.handler.ex.CustomValidationApiException;
+import com.jake.photogram.handler.exception.CustomValidationApiException;
 import com.jake.photogram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 @Service

@@ -4,7 +4,7 @@ import com.jake.photogram.config.auth.PrincipalDetails;
 import com.jake.photogram.damain.User;
 import com.jake.photogram.dto.ExceptionResponse;
 import com.jake.photogram.dto.req.UserUpdateRequest;
-import com.jake.photogram.handler.ex.CustomValidationApiException;
+import com.jake.photogram.handler.exception.CustomValidationApiException;
 import com.jake.photogram.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,4 @@
-package com.jake.photogram.handler.ex;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+package com.jake.photogram.handler.exception;
 
 import java.util.Map;
 

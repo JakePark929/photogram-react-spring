@@ -1,7 +1,7 @@
 package com.jake.photogram.controller;
 
 import com.jake.photogram.damain.User;
-import com.jake.photogram.dto.req.SignUpRequest;
+import com.jake.photogram.dto.req.UserSignUpRequest;
 import com.jake.photogram.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class AuthController {
     // 회원가입
     @CrossOrigin
     @PostMapping("/auth/sign-up")
-    public ResponseEntity<?> signup(@Valid @RequestBody SignUpRequest signUpRequest, BindingResult bindingResult) {
+    public ResponseEntity<?> signup(@Valid @RequestBody UserSignUpRequest userSignUpRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             for (FieldError error : bindingResult.getFieldErrors()) {
@@ -37,7 +37,7 @@ public class AuthController {
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        User user = signUpRequest.toEntity();
+        User user = userSignUpRequest.toEntity();
         authService.signUp(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

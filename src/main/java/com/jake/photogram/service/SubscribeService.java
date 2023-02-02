@@ -1,6 +1,6 @@
 package com.jake.photogram.service;
 
-import com.jake.photogram.handler.ex.CustomApiException;
+import com.jake.photogram.handler.exception.CustomApiException;
 import com.jake.photogram.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

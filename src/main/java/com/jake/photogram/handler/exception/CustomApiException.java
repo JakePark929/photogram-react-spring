@@ -1,6 +1,4 @@
-package com.jake.photogram.handler.ex;
-
-import java.util.Map;
+package com.jake.photogram.handler.exception;
 
 public class CustomApiException extends RuntimeException {
 
