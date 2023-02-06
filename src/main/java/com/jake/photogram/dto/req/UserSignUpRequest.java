@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class SignUpRequest {
+public class UserSignUpRequest {
     @NotNull(message = "아이디 키 값이 없습니다.")
     @NotBlank(message = "아이디를 입력하세요.")
     @Size(max=20, message = "아이디가 길이를 초과하였습니다.")

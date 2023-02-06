@@ -6,6 +6,7 @@ import com.jake.photogram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    @Value("${file.path}")
+    private String uploadFolder;
 
     // 회원가입
     @Transactional
@@ -25,6 +28,7 @@ public class AuthService {
             String encPassword = encoder.encode(rawPassword);
             user.setPassword(encPassword);
             user.setRole(RoleType.USER.getDescription());
+            user.setPrivateFileUrl(uploadFolder);
             User userEntity = userRepository.save(user);
             return 1;
         } catch (Exception e) {

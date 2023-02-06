@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 
 const StoryPage = () => {
-    const likeRef = useRef();
+    const likeRef = useRef(null);
 
     const toggleLike = () => {
         const color = likeRef.current.style.color;

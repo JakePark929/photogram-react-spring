@@ -1,7 +1,6 @@
 package com.jake.photogram.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonResponse<T> {
-    private int statusCode;
+    private int code; // 1(성공), -1(실패)
+    private String message;
     private T data;
 
-    public CommonResponse(int statusCode) {
-        this.statusCode = statusCode;
+    public CommonResponse(int code, String message) {
+        this.code = code;
+        this.message = message;
     }
 }

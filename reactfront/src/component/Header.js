@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 const Header = (props) => {
     const navigate = useNavigate();
-    const user = props.user;
+    const principal = props.principal;
 
     return (
         <div>
@@ -25,7 +25,7 @@ const Header = (props) => {
                                 <FontAwesomeIcon icon={faCompass} onClick={() => navigate("/image/popular")} style={{cursor:"pointer"}}/>
                             </li>
                             <li className="navi-item">
-                                <FontAwesomeIcon icon={faUser} onClick={() => navigate("/user/"+user.id)} style={{cursor:"pointer"}}/>
+                                <FontAwesomeIcon icon={faUser} onClick={() => navigate("/user/"+principal.id)} style={{cursor:"pointer"}}/>
                             </li>
                         </ul>
                     </nav>

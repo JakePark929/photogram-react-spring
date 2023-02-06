@@ -2,9 +2,10 @@ package com.jake.photogram.controller.api;
 
 import com.jake.photogram.config.auth.PrincipalDetails;
 import com.jake.photogram.damain.User;
-import com.jake.photogram.dto.ExceptionResponse;
+import com.jake.photogram.dto.CommonResponse;
 import com.jake.photogram.dto.req.UserUpdateRequest;
-import com.jake.photogram.handler.ex.CustomValidationApiException;
+import com.jake.photogram.dto.res.UserProfileResponse;
+import com.jake.photogram.handler.exception.CustomValidationApiException;
 import com.jake.photogram.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +26,17 @@ import java.util.Map;
 public class UserApiController {
     private final UserService userService;
 
+    @GetMapping("/api/user/{pageUserId}")
+    public ResponseEntity<CommonResponse<?>> userProfile(
+            @PathVariable Long pageUserId,
+            @AuthenticationPrincipal PrincipalDetails principal
+    ) {
+        UserProfileResponse response = userService.userProfile(pageUserId, principal.getUser().getId());
+        return new ResponseEntity<>(new CommonResponse<>(1, "유저정보 불러오기 성공", response), HttpStatus.OK);
+    }
+
     @PutMapping("/api/user/{id}/update")
-    public ResponseEntity<ExceptionResponse<?>> updateUser(
+    public ResponseEntity<CommonResponse<?>> updateUser(
             @PathVariable Long id,
             @AuthenticationPrincipal PrincipalDetails principal,
             @Valid @RequestBody UserUpdateRequest request,
@@ -42,7 +49,7 @@ public class UserApiController {
             }
             throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
         } else {
-        User userEntity = userService.updateUser(id, request);
+            User userEntity = userService.updateUser(id, request);
             principal.setUser(userEntity); // 세션 정보 변경
             return new ResponseEntity<>(HttpStatus.OK);
         }

@@ -1,3 +1,4 @@
+# basic server setting
 server:
   port: 9000
   servlet:
@@ -5,6 +6,7 @@ server:
       charset: UTF-8
       enabled: true
 
+# spring server setting
 spring:
   # db setting
   datasource:
@@ -21,3 +23,13 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+
+  # multipart setting
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+
+# file path
+file:
+  path: C:\Users\epike\Documents\projects\photogram\upload\

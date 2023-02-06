@@ -19,7 +19,7 @@ const UpdatePage = () => {
     });
 
     useEffect(() => {
-        fetch(ip + port + "/user/log-info").then(res => res.json()).then(res => {
+        fetch(ip + port + "/user/my-info").then(res => res.json()).then(res => {
             setUser(res);
         });
     }, [updated]);
@@ -89,7 +89,7 @@ const UpdatePage = () => {
                         <div className="content-item__04">
                             <div className="item__title">패스워드</div>
                             <div className="item__input">
-                                <input type="password" name="password" placeholder="패스워드" required/>
+                                <input type="password" name="password" placeholder="패스워드"/>
                             </div>
                         </div>
                         <div className="content-item__05">
@@ -102,7 +102,7 @@ const UpdatePage = () => {
                         <div className="content-item__06">
                             <div className="item__title">소개</div>
                             <div className="item__input">
-                                <textarea name="bio" id="" rows="3">{user.bio}</textarea>
+                                <textarea name="bio" id="" rows="3" defaultValue={user.bio}></textarea>
                             </div>
                         </div>
                         <div className="content-item__07">

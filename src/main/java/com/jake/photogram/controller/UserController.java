@@ -1,7 +1,8 @@
 package com.jake.photogram.controller;
 
 import com.jake.photogram.config.auth.PrincipalDetails;
-import com.jake.photogram.damain.User;
+import com.jake.photogram.dto.res.UserFindResponse;
+import com.jake.photogram.dto.res.UserLogResponse;
 import com.jake.photogram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
     private final UserService userService;
     @GetMapping("/user/log-info")
+    public ResponseEntity<?> logInfo(@AuthenticationPrincipal PrincipalDetails principal) {
+        UserLogResponse response = new UserLogResponse();
+        response.setId(principal.getUser().getId());
+        response.setUsername(principal.getUser().getUsername());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/my-info")
     public ResponseEntity<?> myInfo(@AuthenticationPrincipal PrincipalDetails principal) {
-        User user = principal.getUser();
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserFindResponse response = new UserFindResponse(principal.getUser());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

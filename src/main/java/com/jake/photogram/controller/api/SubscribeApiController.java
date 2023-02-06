@@ -1,7 +1,7 @@
 package com.jake.photogram.controller.api;
 
 import com.jake.photogram.config.auth.PrincipalDetails;
-import com.jake.photogram.dto.ExceptionResponse;
+import com.jake.photogram.dto.CommonResponse;
 import com.jake.photogram.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,12 @@ public class SubscribeApiController {
     @PostMapping("/api/subscribe/{toUserId}")
     public ResponseEntity<?> subscribe(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long toUserId) {
         subscribeService.subscribe(principal.getUser().getId(), toUserId);
-        return new ResponseEntity<>(new ExceptionResponse<>(1, "구독하기 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponse<>(1, "구독하기 성공", null), HttpStatus.OK);
     }
 
     @DeleteMapping("/api/subscribe/{toUserId}")
     public ResponseEntity<?> unSubscribe(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long toUserId) {
         subscribeService.unSubscribe(principal.getUser().getId(), toUserId);
-        return new ResponseEntity<>(new ExceptionResponse<>(1, "구독취소 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponse<>(1, "구독취소 성공", null), HttpStatus.OK);
     }
 }

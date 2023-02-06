@@ -1,4 +1,4 @@
-package com.jake.photogram.handler.ex;
+package com.jake.photogram.handler.exception;
 
 import java.util.Map;
 
