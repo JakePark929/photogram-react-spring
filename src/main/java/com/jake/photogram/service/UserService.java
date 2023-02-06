@@ -2,7 +2,7 @@ package com.jake.photogram.service;
 
 import com.jake.photogram.damain.User;
 import com.jake.photogram.dto.req.UserUpdateRequest;
-import com.jake.photogram.dto.res.UserAndImageResponse;
+import com.jake.photogram.dto.res.UserProfileResponse;
 import com.jake.photogram.handler.exception.CustomApiException;
 import com.jake.photogram.handler.exception.CustomValidationApiException;
 import com.jake.photogram.repository.UserRepository;
@@ -18,11 +18,17 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     @Transactional(readOnly = true)
-    public User userProfile(Long userId) {
+    public UserProfileResponse userProfile(Long pageUserId, Long principalId) {
         // SELECT * FROM image WHERE userId = :userId;
-        User userEntity = userRepository.findById(userId)
+        User userEntity = userRepository.findById(pageUserId)
                 .orElseThrow(() -> new CustomApiException("해당 프로필 페이지는 없는 페이지 입니다."));
-        return userEntity;
+
+        UserProfileResponse response = new UserProfileResponse();
+        response.setUser(userEntity);
+        response.setPageOwner(pageUserId.equals(principalId));
+        response.setImageCount(userEntity.getImages().size());
+
+        return response;
     }
 
     @Transactional

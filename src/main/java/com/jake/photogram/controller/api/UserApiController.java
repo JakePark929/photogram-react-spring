@@ -4,6 +4,7 @@ import com.jake.photogram.config.auth.PrincipalDetails;
 import com.jake.photogram.damain.User;
 import com.jake.photogram.dto.CommonResponse;
 import com.jake.photogram.dto.req.UserUpdateRequest;
+import com.jake.photogram.dto.res.UserProfileResponse;
 import com.jake.photogram.handler.exception.CustomValidationApiException;
 import com.jake.photogram.service.UserService;
 import jakarta.validation.Valid;
@@ -25,10 +26,13 @@ import java.util.Map;
 public class UserApiController {
     private final UserService userService;
 
-    @GetMapping("/api/user/{id}")
-    public ResponseEntity<CommonResponse<?>> userProfile(@PathVariable Long id) {
-        User userEntity = userService.userProfile(id);
-        return new ResponseEntity<>(new CommonResponse<>(1, "유저정보 불러오기 성공", userEntity), HttpStatus.OK);
+    @GetMapping("/api/user/{pageUserId}")
+    public ResponseEntity<CommonResponse<?>> userProfile(
+            @PathVariable Long pageUserId,
+            @AuthenticationPrincipal PrincipalDetails principal
+    ) {
+        UserProfileResponse response = userService.userProfile(pageUserId, principal.getUser().getId());
+        return new ResponseEntity<>(new CommonResponse<>(1, "유저정보 불러오기 성공", response), HttpStatus.OK);
     }
 
     @PutMapping("/api/user/{id}/update")
