@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +25,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
+    @Transactional
     public Integer uploadImage(ImageUploadRequest request, PrincipalDetails principal) {
         LocalDateTime now = LocalDateTime.now();
         String date = "" + now.getYear() + addZeroToNumber(now.getMonthValue()) + addZeroToNumber(now.getDayOfMonth());
@@ -48,7 +50,7 @@ public class ImageService {
         Image image = request.toEntity(imageFileName, principal.getUser());
         Image imageEntity = imageRepository.save(image);
 
-        log.info(imageEntity.toString());
+//        log.info(imageEntity.toString());
 
         return 1;
     }
