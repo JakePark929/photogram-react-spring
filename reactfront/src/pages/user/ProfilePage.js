@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Profile.css'
 import {useLocation, useNavigate} from "react-router-dom";
-import {faCog, faHeart} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Modal} from "react-bootstrap";
 import {useSelector} from "react-redux";
@@ -13,8 +13,10 @@ const ProfilePage = (props) => {
     let pageNumber = url.substring(url.lastIndexOf("/") + 1);
     const principal = props.principal;
     const [data, setData] = useState({
-        pageOwner: "",
+        pageOwnerState: "",
         imageCount: "",
+        subscribeState: "",
+        subscribeCount: "",
         user: {
             images: "",
 
@@ -46,19 +48,45 @@ const ProfilePage = (props) => {
         createDate: "",
     });
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const showData = () => {
-        console.log(data);
-        console.log(data.user.images);
-    }
-
     useEffect(() => {
         fetch(ip + port + "/api/user/" + pageNumber).then(res => res.json()).then(res => {
             setData(res.data);
         });
     }, []);
+
+    const subscribe = () => {
+        fetch(ip + port + "/api/subscribe/" + pageNumber, {
+            method: "POST",
+        })
+            .then(res => {
+                console.log(1, res)
+                if (res.status === 200) {
+                    setData({
+                        ...data,
+                        subscribeState: true,
+                    })
+                } else {
+                    alert("구독 실패");
+                }
+            })
+    }
+
+    const unSubscribe = () => {
+        fetch(ip + port + "/api/subscribe/" + pageNumber, {
+            method: "DELETE",
+        })
+            .then(res => {
+                console.log(1, res)
+                if (res.status === 200) {
+                    setData({
+                        ...data,
+                        subscribeState: false,
+                    })
+                } else {
+                    alert("구독취소 실패");
+                }
+            })
+    }
 
     const logout = () => {
         fetch(ip + port + "/logout", {
@@ -70,6 +98,20 @@ const ProfilePage = (props) => {
                     navigate("/auth/sign-in");
                 }
             })
+    }
+
+    // 모달 관련
+    const [userSetting, setUserSetting] = useState(false);
+    const closeUserSetting = () => setUserSetting(false);
+    const showUserSetting = () => setUserSetting(true);
+
+    const [followingList, setFollowingList] = useState(false);
+    const closeFollowingList = () => setFollowingList(false);
+    const showFollowingList = () => setFollowingList(true);
+
+    const showData = () => {
+        console.log(data);
+        console.log(data.user.images);
     }
 
     return (
@@ -95,22 +137,26 @@ const ProfilePage = (props) => {
                             <h2>{data.user.username}</h2>
 
                             {
-                                data.pageOwner ?
+                                data.pageOwnerState ?
                                     <button className="cta" onClick={() => navigate("/image/upload")}>사진등록</button>
-                                    : <button className="cta">구독하기</button>
+                                    : data.subscribeState ?
+                                        <button className="cta blue" onClick={unSubscribe}>구독취소</button>
+                                        : <button className="cta" onClick={subscribe}>구독하기</button>
                             }
                             {/*<button className="cta" onClick={showData}>유저정보</button>*/}
-                            <button className="modi" onClick={handleShow}>
+                            <button className="modi" onClick={showUserSetting}>
                                 <FontAwesomeIcon icon={faCog}/>
                             </button>
                         </div>
 
                         <div className="subscribe">
                             <ul>
-                                <li><a href=""> 게시물<span>{data.imageCount}</span>
+                                <li><a href="">
+                                    게시물 <span>{data.imageCount}</span>
                                 </a></li>
-                                <li><a href=""> 구독정보<span>2</span>
-                                </a></li>
+                                <li onClick={showFollowingList}>
+                                    팔로잉 <span>{data.subscribeCount}</span>
+                                </li>
                             </ul>
                         </div>
                         <div className="state">
@@ -149,8 +195,8 @@ const ProfilePage = (props) => {
             </section>
 
 
-            {/*모달*/}
-            <Modal className="modal-info" size="sm" show={show} onHide={handleClose}>
+            {/*회원정보 모달*/}
+            <Modal className="modal-info" size="sm" show={userSetting} onHide={closeUserSetting}>
                 <Modal.Body className="modal">
                     <button onClick={() => navigate("/user/" + principal.id + "/update")}>
                         회원정보변경
@@ -158,9 +204,48 @@ const ProfilePage = (props) => {
                     <button onClick={logout}>
                         로그아웃
                     </button>
-                    <button onClick={handleClose}>
+                    <button onClick={closeUserSetting}>
                         취소
                     </button>
+                </Modal.Body>
+            </Modal>
+
+            {/*팔로잉리스트 모달*/}
+            <Modal className="modal-subscribe" size="sm" show={followingList} onHide={closeFollowingList}>
+                <Modal.Body className="subscribe">
+                    <div className="subscribe-header">
+                        <span>구독정보</span>
+                        <button onClick={closeFollowingList}>
+                            <FontAwesomeIcon icon={faTimes}/>
+                        </button>
+                    </div>
+
+                    <div className="subscribe-list" id="subscribeModalList">
+
+                        <div className="subscribe__item" id="subscribeModalItem-1">
+                            <div className="subscribe__img">
+                                <img src="#"/>
+                            </div>
+                            <div className="subscribe__text">
+                                <h2>love</h2>
+                            </div>
+                            <div className="subscribe__btn">
+                                <button className="cta blue" onClick={unSubscribe}>구독취소</button>
+                            </div>
+                        </div>
+
+                        <div className="subscribe__item" id="subscribeModalItem-2">
+                            <div className="subscribe__img">
+                                <img src="#"/>
+                            </div>
+                            <div className="subscribe__text">
+                                <h2>ssar</h2>
+                            </div>
+                            <div className="subscribe__btn">
+                                <button className="cta blue" onClick={unSubscribe}>구독취소</button>
+                            </div>
+                        </div>
+                    </div>
                 </Modal.Body>
             </Modal>
         </>
