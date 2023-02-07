@@ -39,7 +39,7 @@ const UploadPage = (props) => {
                 .then(res => {
                     if (res.status === 200) {
                         alert("사진 업로드에 성공하였습니다.");
-                        navigate("/user/"+props.id);
+                        navigate("/user/"+props.principal.id);
                     } else {
                         alert("사진 업로드에 실패하였습니다.");
                     }

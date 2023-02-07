@@ -9,7 +9,9 @@ import lombok.*;
 @Getter
 @Setter
 public class UserProfileResponse {
-    private boolean pageOwner;
+    private boolean pageOwnerState;
     private int imageCount;
+    private boolean subscribeState;
+    private int subscribeCount;
     private User user;
 }

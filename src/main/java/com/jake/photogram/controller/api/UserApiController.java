@@ -4,8 +4,10 @@ import com.jake.photogram.config.auth.PrincipalDetails;
 import com.jake.photogram.damain.User;
 import com.jake.photogram.dto.CommonResponse;
 import com.jake.photogram.dto.req.UserUpdateRequest;
+import com.jake.photogram.dto.res.SubscribeListResponse;
 import com.jake.photogram.dto.res.UserProfileResponse;
 import com.jake.photogram.handler.exception.CustomValidationApiException;
+import com.jake.photogram.service.SubscribeService;
 import com.jake.photogram.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -25,6 +28,7 @@ import java.util.Map;
 @RestController
 public class UserApiController {
     private final UserService userService;
+    private final SubscribeService subscribeService;
 
     @GetMapping("/api/user/{pageUserId}")
     public ResponseEntity<CommonResponse<?>> userProfile(
@@ -53,5 +57,11 @@ public class UserApiController {
             principal.setUser(userEntity); // 세션 정보 변경
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/api/user/{pageUserId}/subscribe")
+    public ResponseEntity<?> subscribeList(@PathVariable Long pageUserId, @AuthenticationPrincipal PrincipalDetails principal) {
+        List<SubscribeListResponse> response = subscribeService.subscribeList(pageUserId, principal.getUser().getId());
+        return new ResponseEntity<>(new CommonResponse<>(1, "구독정보 불러오기 성공", response), HttpStatus.OK);
     }
 }

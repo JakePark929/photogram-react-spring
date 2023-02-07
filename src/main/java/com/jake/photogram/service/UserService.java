@@ -5,6 +5,7 @@ import com.jake.photogram.dto.req.UserUpdateRequest;
 import com.jake.photogram.dto.res.UserProfileResponse;
 import com.jake.photogram.handler.exception.CustomApiException;
 import com.jake.photogram.handler.exception.CustomValidationApiException;
+import com.jake.photogram.repository.SubscribeRepository;
 import com.jake.photogram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final SubscribeRepository subscribeRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Transactional(readOnly = true)
@@ -25,8 +27,13 @@ public class UserService {
 
         UserProfileResponse response = new UserProfileResponse();
         response.setUser(userEntity);
-        response.setPageOwner(pageUserId.equals(principalId));
+        response.setPageOwnerState(pageUserId.equals(principalId));
         response.setImageCount(userEntity.getImages().size());
+
+        int subscribeState = subscribeRepository.mSubScribeState(pageUserId, principalId);
+        int subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
+        response.setSubscribeState(subscribeState == 1);
+        response.setSubscribeCount(subscribeCount);
 
         return response;
     }
