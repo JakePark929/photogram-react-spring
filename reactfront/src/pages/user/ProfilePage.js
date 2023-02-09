@@ -19,7 +19,6 @@ const ProfilePage = (props) => {
         subscribeCount: "",
         user: {
             images: "",
-
         },
     });
     // const [user, setUser] = useState({
@@ -64,7 +63,7 @@ const ProfilePage = (props) => {
                     setData({
                         ...data,
                         subscribeState: true,
-                    })
+                    });
                 } else {
                     alert("구독 실패");
                 }
