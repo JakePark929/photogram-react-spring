@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class User {
     @Id
@@ -36,8 +37,8 @@ public class User {
     // User 를 Select 할 때 해당 User id로 등록된 image 들을 다 가져와.
     // Lazy = User 를 Select 할 때 해당 User id로 등록된 image 들을 가져오지마. - 대신 getImages() 함수가 호출될 때 가져와.
     // Eager = User 를 Select 할 때 User id로 등록된 image 들을 전부 Join 해서 가져와
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"user"})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Image> images;
 
     private LocalDateTime createDate;

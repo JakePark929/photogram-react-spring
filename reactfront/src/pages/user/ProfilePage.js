@@ -64,7 +64,7 @@ const ProfilePage = (props) => {
                     setData({
                         ...data,
                         subscribeState: true,
-                    })
+                    });
                 } else {
                     alert("구독 실패");
                 }
