@@ -228,18 +228,16 @@ button:first-child
     border: 2px solid #8a3ab8;
 }
 
-.btn {
-    margin-bottom: 10px;
-    width: 30%;
-    color: white;
-    background-color: pink;
-    height: 50px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+.likeButton{
+    transition: transform 300ms ease;
+}
 
-    & .active {
-        background-color: lightblue;
-    }
+.likeButton:hover {
+    transform: scale(1.1);
+}
+
+.likeButton.active {
+    transform: scale(1.05);
+    color: red;
 }
 

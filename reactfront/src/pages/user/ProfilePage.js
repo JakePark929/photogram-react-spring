@@ -19,7 +19,6 @@ const ProfilePage = (props) => {
         subscribeCount: "",
         user: {
             images: "",
-
         },
     });
     // const [user, setUser] = useState({

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter
@@ -24,11 +25,21 @@ public class Image {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    // TODO: 추후 추가할 내용
     // 이미지 좋아요
+    @JsonIgnoreProperties({"image"})
+    @OneToMany(mappedBy = "image")
+    private List<Likes> likes;
+
+    // TODO: 추후 추가할 내용
     // 댓글
 
     private LocalDateTime createDate;
+
+    @Transient // DB에 컬럼이 만들어 지지 않는다.
+    @Setter private boolean likeState;
+
+    @Transient
+    @Setter private int likeCount;
 
     public void setUser(User user) {
         this.user = user;

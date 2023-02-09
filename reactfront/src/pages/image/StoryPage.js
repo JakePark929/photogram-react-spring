@@ -1,24 +1,12 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Story.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
-import {throttle} from "lodash";
-import {click} from "@testing-library/user-event/dist/click";
 
 let page = 0;
-let htnActive = 0;
 
 const StoryPage = () => {
-    let hata = [0, 1, 2, 3, 4];
-
-    const toggleActive = (e) => {
-        console.log("클릭");
-        console.log(e.target.value);
-        htnActive = e.target.value;
-        console.log(htnActive);
-    };
-
     const {ip, port} = useSelector((store) => store);
     const [data, setData] = useState({
         totalPages: "",
@@ -31,7 +19,9 @@ const StoryPage = () => {
         id: "",
         caption: "",
         postImageUrl: "",
-        createDate: ""
+        createDate: "",
+        likeState: "",
+        likeCount: ""
     });
     const [user, setUser] = useState({
         id: "",
@@ -45,18 +35,52 @@ const StoryPage = () => {
         profileImageUrl: "",
         privateFileUrl: "",
     });
+    
+    // 좋아요 리스트
+    const [select, setSelect] = useState([]);
 
-    const [btnActive, setBtnActive] = useState("");
-    const toggleLike = (e) => {
-       setBtnActive((prev) => {
-           return e.target.value;
-       })
+    const iLike = (id) => {
+        let item = images.find((image)=>image.id === id);
+        if (item.likeState === false) {
+            fetch("/api/image/" + id + "/likes", {
+                method: "POST",
+            })
+                .then(res => {
+                    if (res.status === 201) {
+                        let findIndex = images.findIndex(item => item.id === id);
+                        let copiedImages = [...images];
+                        copiedImages[findIndex].likeState = true;
+                        copiedImages[findIndex].likeCount++;
+                        setImages(copiedImages);
+                    } else {
+                        alert("좋아요 실패");
+                    }
+                })
+        } else {
+            fetch("/api/image/" + id + "/likes", {
+                method: "DELETE",
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        let findIndex = images.findIndex(item => item.id === id);
+                        let copiedImages = [...images];
+                        copiedImages[findIndex].likeState = false;
+                        copiedImages[findIndex].likeCount--;
+                        setImages(copiedImages);
+                    } else {
+                        alert("좋아요 취소 실패");
+                    }
+                })
+        }
     }
-
+    
+    // 데이터 보기
     const showData = () => {
         console.log(images);
+        console.log(select);
     }
 
+    // 페이지 불러오기 관련
     const getPage = () => {
         fetch(ip + port + "/api/image?page=" + page).then(res => res.json()).then(res => {
             setData(res.data);
@@ -94,24 +118,9 @@ const StoryPage = () => {
         <main className="main">
             <section className="container">
                 <button onClick={showData}>정보보기</button>
-                <div className="container">
-                    {hata.map((item, idx) => {
-                        return (
-                            <>
-                                <button
-                                    value={idx}
-                                    className={"btn" + (idx === htnActive ? " active" : "")}
-                                    onClick={toggleActive}
-                                >
-                                    {item}
-                                </button>
-                            </>
-                        );
-                    })}
-                </div>
                 {
                     Object.keys(images).length === 0 ? '' :
-                        images.map((image, idx) =>
+                        images.map((image) =>
                             <article key={image.id} className="story-list" id="storyList">
                                 <div className="story-list__item">
                                     <div className="sl__item__header">
@@ -131,14 +140,19 @@ const StoryPage = () => {
                                             <button>
                                                 <FontAwesomeIcon
                                                     icon={faHeart}
-                                                    value = {idx}
-                                                    className={"btn" + (idx === btnActive ? " active" : "")}
-                                                    onClick={toggleLike}
+                                                    // className={select.includes(image.id) ? "likeButton active" : "likeButton"}
+                                                    className={image.likeState ? "likeButton active" : "likeButton"}
+                                                    // onClick={() => {
+                                                    //     !select.includes(image.id) ?
+                                                    //         setSelect(() => [...select, image.id])
+                                                    //         : setSelect(select.filter((value) => value !== image.id))
+                                                    // }}
+                                                    onClick={() => iLike(image.id)}
                                                 />
                                             </button>
                                         </div>
 
-                                        <span className="like"><b id="storyLikeCount-1">3</b>likes</span>
+                                        <span className="like"><b id="storyLikeCount-1">{image.likeCount}</b>likes</span>
 
 
                                         <div className="sl__item__contents__content">
