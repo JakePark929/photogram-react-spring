@@ -5,7 +5,6 @@ import {faFacebook} from "@fortawesome/free-brands-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 
 const SignInPage = () => {
-    const url="http://localhost:9000"
     const navigate = useNavigate();
     const signIn = (e) => {
         e.preventDefault();
@@ -22,7 +21,7 @@ const SignInPage = () => {
         }
         formBody = formBody.join("&");
 
-        fetch(url + "/auth/sign-in", {
+        fetch("/auth/sign-in", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"

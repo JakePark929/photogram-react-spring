@@ -35,6 +35,10 @@ public class UserService {
         response.setSubscribeState(subscribeState == 1);
         response.setSubscribeCount(subscribeCount);
 
+        userEntity.getImages().forEach((image -> {
+            image.setLikeCount(image.getLikes().size());
+        }));
+
         return response;
     }
 

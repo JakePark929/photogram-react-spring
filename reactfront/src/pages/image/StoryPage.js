@@ -73,12 +73,6 @@ const StoryPage = () => {
                 })
         }
     }
-    
-    // 데이터 보기
-    const showData = () => {
-        console.log(images);
-        console.log(select);
-    }
 
     // 페이지 불러오기 관련
     const getPage = () => {
@@ -117,11 +111,10 @@ const StoryPage = () => {
     return (
         <main className="main">
             <section className="container">
-                <button onClick={showData}>정보보기</button>
                 {
                     Object.keys(images).length === 0 ? '' :
-                        images.map((image) =>
-                            <article key={image.id} className="story-list" id="storyList">
+                        images.map((image, idx) =>
+                            <article key={idx} className="story-list" id="storyList">
                                 <div className="story-list__item">
                                     <div className="sl__item__header">
                                         <div>

@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -74,6 +75,11 @@ public class ImageService {
             });
         });
         return images;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Image> poplarImage() {
+        return imageRepository.mPopular();
     }
 
     protected String addZeroToNumber(int number) {

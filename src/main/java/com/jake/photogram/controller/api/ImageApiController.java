@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class ImageApiController {
@@ -27,6 +29,13 @@ public class ImageApiController {
     ) {
         Page<Image> images = imageService.imageStory(principal.getUser().getId(), pageable);
         return new ResponseEntity<>(new CommonResponse<>(1, "스토리 불러오기 성공", images), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/image/popular")
+    public ResponseEntity<?> imagePopular(
+    ) {
+        List<Image> images = imageService.poplarImage();
+        return new ResponseEntity<>(new CommonResponse<>(1, "인기사진 불러오기 성공", images), HttpStatus.OK);
     }
 
     @PostMapping("/api/image/{imageId}/likes")
