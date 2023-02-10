@@ -45,7 +45,13 @@ const ProfilePage = (props) => {
         caption: "",
         postImageUrl: "",
         createDate: "",
+        likeCount: ""
     });
+
+    const profileImageUpload = () => {
+        console.log("클릭");
+        document.getElementById('userProfileImageInput').click();
+    }
 
     useEffect(() => {
         fetch(ip + port + "/api/user/" + pageNumber).then(res => res.json()).then(res => {
@@ -108,6 +114,10 @@ const ProfilePage = (props) => {
     const closeFollowingList = () => setFollowingList(false);
     const showFollowingList = () => setFollowingList(true);
 
+    const [profileImage, setProfileImage] = useState(false);
+    const closeProfileImage = () => setProfileImage(false);
+    const showProfileImage = () => setProfileImage(true);
+
     const showData = () => {
         console.log(data);
         console.log(data.user.images);
@@ -120,10 +130,11 @@ const ProfilePage = (props) => {
 
                     <div className="profile-left">
                         <div className="profile-img-wrap story-border"
+                             onClick={showProfileImage}
                         >
                             <form id="userProfileImageForm">
-                                {/*<input type="file" name="profileImageFile" style="display: none;"*/}
-                                {/*       id="userProfileImageInput" />*/}
+                                <input type="file" name="profileImageFile" style={{display: "none"}}
+                                       id="userProfileImageInput" />
                             </form>
 
                             <img className="profile-image" src="#"
@@ -183,7 +194,7 @@ const ProfilePage = (props) => {
                                             </a>
                                             <div className="comment">
                                                 <a href="#" className=""><FontAwesomeIcon icon={faHeart}/>
-                                                    <span>0</span>
+                                                    <span>{image.likeCount}</span>
                                                 </a>
                                             </div>
                                         </div>)
@@ -193,6 +204,14 @@ const ProfilePage = (props) => {
                 </div>
             </section>
 
+            {/*프로필사진 바꾸기 모달*/}
+            <Modal className="modal-image" size="sm" show={profileImage} onHide={closeProfileImage}>
+                <Modal.Body className="modal">
+                    <p>프로필 사진 바꾸기</p>
+                    <button onClick={profileImageUpload}>사진 업로드</button>
+                    <button onClick={closeProfileImage}>취소</button>
+                </Modal.Body>
+            </Modal>
 
             {/*회원정보 모달*/}
             <Modal className="modal-info" size="sm" show={userSetting} onHide={closeUserSetting}>

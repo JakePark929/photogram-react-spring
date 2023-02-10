@@ -3,7 +3,6 @@ import './Sign.css';
 import {Link, useNavigate} from "react-router-dom";
 
 const SignUpPage = () => {
-    const url="http://localhost:9000"
     const navigate = useNavigate();
     const signUp = (e) => {
         e.preventDefault();
@@ -15,7 +14,7 @@ const SignUpPage = () => {
             name: data.get('name')
         }
         console.log(user);
-        fetch(url + "/auth/sign-up", {
+        fetch("/auth/sign-up", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
