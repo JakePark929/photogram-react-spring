@@ -14,6 +14,7 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Image {
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,8 +32,10 @@ public class Image {
     @OneToMany(mappedBy = "image")
     private List<Likes> likes;
 
-    // TODO: 추후 추가할 내용
     // 댓글
+    @JsonIgnoreProperties({"image"})
+    @OneToMany(mappedBy = "image") // lazy loading
+    private List<Comment> comments;
 
     @Transient // DB에 컬럼이 만들어 지지 않는다.
     @Setter private boolean likeState;
