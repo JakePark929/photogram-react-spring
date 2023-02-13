@@ -19,7 +19,7 @@ const Header = (props) => {
                     <nav className="navi">
                         <ul className="navi-list">
                             <li className="navi-item">
-                                <FontAwesomeIcon icon={faHouse} onClick={() => navigate("/image/story")} style={{cursor:"pointer"}}/>
+                                <FontAwesomeIcon icon={faHouse} onClick={() => navigate("/")} style={{cursor:"pointer"}}/>
                             </li>
                             <li className="navi-item">
                                 <FontAwesomeIcon icon={faCompass} onClick={() => navigate("/image/popular")} style={{cursor:"pointer"}}/>
