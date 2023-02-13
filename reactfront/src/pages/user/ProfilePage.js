@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './Profile.css'
 import {useLocation, useNavigate} from "react-router-dom";
 import {faCog, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,10 @@ const ProfilePage = (props) => {
     const url = useLocation().pathname;
     let pageNumber = url.substring(url.lastIndexOf("/") + 1);
     const principal = props.principal;
+    const imgRef = useRef(null);
+    const [saveState, setSaveState] = useState(false);
+    const [updated, setUpdated] = useState(false);
+    const [profile, setProfile] = useState("");
     const [data, setData] = useState({
         pageOwnerState: "",
         imageCount: "",
@@ -48,16 +52,65 @@ const ProfilePage = (props) => {
         likeCount: ""
     });
 
+    const changeProfileImage = () => {
+        const file = imgRef.current.files[0];
+
+        if (file !== undefined) {
+            if (!file.type.match("image.*")) {
+                alert("이미지 파일만 업로드 가능합니다.");
+                imgRef.current.value = "";
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                setProfile(reader.result);
+                saveProfileImage()
+                // setSaveState(true);
+            };
+        } else {
+            setProfile("");
+        }
+    }
+
+    const saveProfileImage = () => {
+        let profile = imgRef.current.files[0];
+        let formData = new FormData();
+        formData.append("profileImageFile", profile)
+        fetch("/api/user/" + principal.id + "/profileImageUrl", {
+            method: "PUT",
+            body: formData
+            // contentType: false, // 필수: x-www-form-urlencoded 로 파싱되는 것을 방지
+            // processData: false, // contentType을 false로 줬을 때 QueryString 자동 설정 됨. 해제
+            // enctype: "multipart/form-data",
+            // datatype: "json",
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    alert("프로필이미지 수정에 성공하였습니다.");
+                    setSaveState(false);
+                    setUpdated(!updated);
+                } else {
+                    alert("프로필이미지 수정에 실패하였습니다.");
+                }
+            })
+    }
+
+    const cancelProfileImage = () => {
+        setProfile("");
+        setSaveState(false);
+    }
+
     const profileImageUpload = () => {
-        console.log("클릭");
         document.getElementById('userProfileImageInput').click();
+        closeProfileImage();
     }
 
     useEffect(() => {
         fetch(ip + port + "/api/user/" + pageNumber).then(res => res.json()).then(res => {
             setData(res.data);
         });
-    }, []);
+    }, [updated]);
 
     const subscribe = () => {
         fetch(ip + port + "/api/subscribe/" + pageNumber, {
@@ -119,8 +172,7 @@ const ProfilePage = (props) => {
     const showProfileImage = () => setProfileImage(true);
 
     const showData = () => {
-        console.log(data);
-        console.log(data.user.images);
+        console.log(principal.profileImageUrl);
     }
 
     return (
@@ -130,16 +182,32 @@ const ProfilePage = (props) => {
 
                     <div className="profile-left">
                         <div className="profile-img-wrap story-border"
-                             onClick={showProfileImage}
+                             onClick={pageNumber === String(principal.id) ? showProfileImage : null}
                         >
                             <form id="userProfileImageForm">
                                 <input type="file" name="profileImageFile" style={{display: "none"}}
-                                       id="userProfileImageInput" />
+                                       id="userProfileImageInput" ref={imgRef} onChange={changeProfileImage}/>
                             </form>
 
-                            <img className="profile-image" src="#"
-                                 id="userProfileImage"/>
+                            <img
+                                className="profile-image"
+                                src={
+                                    data.user.profileImageUrl ?
+                                        "/upload/profile/" + data.user.profileImageUrl
+                                        : `/images/person.jpeg`
+                                }
+                                id="userProfileImage"
+                                alt="upload image"
+                            />
                         </div>
+
+                        {saveState ?
+                            <div>
+                                <button style={{marginTop: '-1px'}} onClick={saveProfileImage}>저장</button>
+                                <button style={{marginTop: '-1px', marginLeft: '7px'}} onClick={cancelProfileImage}>취소
+                                </button>
+                            </div>
+                            : ""}
                     </div>
 
                     <div className="profile-right">
@@ -153,7 +221,7 @@ const ProfilePage = (props) => {
                                         <button className="cta blue" onClick={unSubscribe}>구독취소</button>
                                         : <button className="cta" onClick={subscribe}>구독하기</button>
                             }
-                            {/*<button className="cta" onClick={showData}>유저정보</button>*/}
+                            <button className="cta" onClick={showData}>유저정보</button>
                             <button className="modi" onClick={showUserSetting}>
                                 <FontAwesomeIcon icon={faCog}/>
                             </button>

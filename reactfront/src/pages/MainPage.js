@@ -12,7 +12,8 @@ const MainPage = () => {
     const {ip, port} = useSelector((store) => store);
     const [principal, setPrincipal] = useState({
         id:"",
-        username:""
+        username:"",
+        profileImageUrl: "",
     });
 
     useEffect(() => {

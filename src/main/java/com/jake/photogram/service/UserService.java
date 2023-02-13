@@ -8,9 +8,17 @@ import com.jake.photogram.handler.exception.CustomValidationApiException;
 import com.jake.photogram.repository.SubscribeRepository;
 import com.jake.photogram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +26,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final SubscribeRepository subscribeRepository;
     private final BCryptPasswordEncoder encoder;
+
+    @Value("${file.path}")
+    private String uploadFolder;
 
     @Transactional(readOnly = true)
     public UserProfileResponse userProfile(Long pageUserId, Long principalId) {
@@ -65,4 +76,36 @@ public class UserService {
         userEntity.setGender(request.getGender());
         return userEntity;
     } // 더티체킹이 일어나서 업데이트가 완료됨.
+
+    @Transactional
+    public User changeProfileImage(Long principalId, MultipartFile profileImageFile) {
+        LocalDateTime now = LocalDateTime.now();
+        String date = "" + now.getYear() + addZeroToNumber(now.getMonthValue()) + addZeroToNumber(now.getDayOfMonth());
+        UUID uuid = UUID.randomUUID();
+        String filename = profileImageFile.getOriginalFilename();
+        assert filename != null;
+        String extension = filename.substring(filename.lastIndexOf("."));
+        String imageFileName = date + "_profile_" + uuid + extension;
+        Path imageFilePath = Paths.get(uploadFolder + "\\profile\\" + imageFileName);
+
+        try {
+            // 통신, I/O(HDD read or write) -> 예외가 발생할 수 있다.
+            Files.write(imageFilePath, profileImageFile.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        User userEntity = userRepository.findById(principalId).orElseThrow(() -> {
+            throw new CustomValidationApiException("유저를 찾을 수 없습니다.");
+        });
+        userEntity.setProfileImageUrl(imageFileName);
+        return userEntity;
+    }
+
+    protected String addZeroToNumber(int number) {
+        if (number < 10) {
+            return "0" + number;
+        }
+        return "" + number;
+    }
 }
