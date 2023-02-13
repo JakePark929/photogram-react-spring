@@ -3,8 +3,10 @@ import './Sign.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook} from "@fortawesome/free-brands-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const SignInPage = () => {
+    const {ip, port} = useSelector((store) => store);
     const navigate = useNavigate();
     const signIn = (e) => {
         e.preventDefault();
@@ -21,7 +23,7 @@ const SignInPage = () => {
         }
         formBody = formBody.join("&");
 
-        fetch("/auth/sign-in", {
+        fetch(ip + port + "/auth/sign-in", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"

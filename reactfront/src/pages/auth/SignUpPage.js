@@ -1,8 +1,10 @@
 import React from 'react';
 import './Sign.css';
 import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const SignUpPage = () => {
+    const {ip, port} = useSelector((store) => store);
     const navigate = useNavigate();
     const signUp = (e) => {
         e.preventDefault();
@@ -14,7 +16,7 @@ const SignUpPage = () => {
             name: data.get('name')
         }
         console.log(user);
-        fetch("/auth/sign-up", {
+        fetch(ip + port + "/auth/sign-up", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"

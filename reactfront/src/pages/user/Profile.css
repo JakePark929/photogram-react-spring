@@ -30,7 +30,8 @@
 .profile .profile-left {
   flex-basis: 40%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .profile .profile-right {
   flex-basis: 60%;
@@ -166,6 +167,7 @@
 
 /* Tab-content 1*/
 #tab-content #tab-1-content {
+  margin-top: 10px;
   width: 100%;
   margin-bottom: 30px;
 }

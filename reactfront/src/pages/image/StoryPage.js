@@ -118,7 +118,13 @@ const StoryPage = () => {
                                 <div className="story-list__item">
                                     <div className="sl__item__header">
                                         <div>
-                                            {/*<img className="profile-image" src="#"/>*/}
+                                            <img className="profile-image"
+                                                 src={
+                                                     image.user.profileImageUrl ?
+                                                         "/upload/profile/" + image.user.profileImageUrl
+                                                         : `/images/person.jpeg`
+                                                 }
+                                            />
                                         </div>
                                         <div>{image.user.username}</div>
                                     </div>
