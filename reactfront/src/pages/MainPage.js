@@ -26,8 +26,8 @@ const MainPage = () => {
         <div>
             <Header principal={principal}/>
             <Routes>
-                <Route path="/" exact={true} element={<StoryPage/>}/>
-                <Route path="/image/story" exact={true} element={<StoryPage/>}/>
+                <Route path="/" exact={true} element={<StoryPage principal={principal}/>}/>
+                <Route path="/image/story" exact={true} element={<StoryPage principal={principal}/>}/>
                 <Route path="/image/popular" exact={true} element={<PopularPage/>}/>
                 <Route path="/image/upload" exact={true} element={<UploadPage principal={principal}/>}/>
                 <Route path={"/user/:id"} exact={true} element={<ProfilePage principal={principal}/>}/>
