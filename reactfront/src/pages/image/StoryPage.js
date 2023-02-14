@@ -6,14 +6,6 @@ import {useSelector} from "react-redux";
 
 let page = 0;
 
-function comment() {
-    return (
-        <div>
-
-        </div>
-    )
-}
-
 const StoryPage = (props) => {
         const {ip, port} = useSelector((store) => store);
         const principal = props.principal;
