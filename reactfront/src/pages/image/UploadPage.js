@@ -56,7 +56,7 @@ const UploadPage = (props) => {
 
                     <div className="upload-top">
                         <Link to="/" className="">
-                            <img src="/images/logo.jpg" alt="logo image"/>
+                            <img src="/images/logo-old.jpg" alt="logo image"/>
                         </Link>
                         <p>사진 업로드</p>
                     </div>

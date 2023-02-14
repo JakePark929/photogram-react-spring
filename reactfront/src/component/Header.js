@@ -14,7 +14,7 @@ const Header = (props) => {
             <header className="header">
                 <div className="container">
                     <a href="/" className="logo">
-                        <img src="/images/logo.jpg" alt=""/>
+                        <img src="/images/logo.png" alt=""/>
                     </a>
                     <nav className="navi">
                         <ul className="navi-list">

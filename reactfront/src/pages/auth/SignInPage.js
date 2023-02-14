@@ -47,7 +47,7 @@ const SignInPage = () => {
                 <section className="login">
                     <article className="login__form__container">
                         <div className="login__form">
-                            <h1><img src="/images/logo.jpg"/></h1>
+                            <h1><img src="/images/logo.png"/></h1>
 
                             <form className="login__input" onSubmit={signIn}>
                                 <input type="text" name="username" placeholder="유저네임" required="required"/>

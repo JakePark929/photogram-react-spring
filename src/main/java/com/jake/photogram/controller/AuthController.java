@@ -30,13 +30,6 @@ public class AuthController {
     @CrossOrigin
     @PostMapping("/auth/sign-up")
     public ResponseEntity<?> signup(@Valid @RequestBody UserSignUpRequest userSignUpRequest, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         User user = userSignUpRequest.toEntity();
         authService.signUp(user);
         return new ResponseEntity<>(HttpStatus.OK);
