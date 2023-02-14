@@ -32,13 +32,6 @@ public class CommentApiController {
             @Valid @RequestBody CommentRequest request,
             BindingResult bindingResult
     ) {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
-        }
         Comment comment = commentService.writeComment(principal.getUser().getId(), request);
         return new ResponseEntity<>(new CommonResponse<>(1, "댓글쓰기 성공", comment), HttpStatus.CREATED);
     }

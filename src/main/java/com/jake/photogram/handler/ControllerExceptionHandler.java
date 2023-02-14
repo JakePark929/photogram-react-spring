@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @ControllerAdvice
 public class ControllerExceptionHandler {
     @ExceptionHandler(CustomValidationException.class)
-    public ResponseEntity<?> validationException(CustomValidationException e) {
+    public ResponseEntity<CommonResponse<?>> validationException(CustomValidationException e) {
+//        return new ResponseEntity<>(new CommonResponse<>(-1, e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
         if (e.getErrorMap() == null) {
             return new ResponseEntity<>(new CommonResponse<>(-1, e.getMessage()), HttpStatus.BAD_REQUEST);
         } else {

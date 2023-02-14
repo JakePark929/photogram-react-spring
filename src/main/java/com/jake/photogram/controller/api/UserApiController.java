@@ -47,17 +47,9 @@ public class UserApiController {
             @Valid @RequestBody UserUpdateRequest request,
             BindingResult bindingResult // @Valid 가 적혀있는 다음 파라메터에 적어야 됨?
     ) {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
-        } else {
-            User userEntity = userService.updateUser(id, request);
-            principal.setUser(userEntity); // 세션 정보 변경
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        User userEntity = userService.updateUser(id, request);
+        principal.setUser(userEntity); // 세션 정보 변경
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/api/user/{principalId}/profileImageUrl")
@@ -65,7 +57,7 @@ public class UserApiController {
             @PathVariable Long principalId,
             @RequestPart(value = "profileImageFile") MultipartFile profileImageFile,
             @AuthenticationPrincipal PrincipalDetails principal
-            ) {
+    ) {
         User userEntity = userService.changeProfileImage(principalId, profileImageFile);
         principal.setUser(userEntity);
         return new ResponseEntity<>(new CommonResponse<>(1, "프로필사진 변경 성공", null), HttpStatus.OK);
