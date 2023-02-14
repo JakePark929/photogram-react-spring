@@ -241,7 +241,12 @@ const StoryPage = (props) => {
                                                              key={idx}
                                                         >
                                                             <p>
-                                                                <b>{comment.user.username} :</b> {comment.content}
+                                                                <b>
+                                                                    <a href={"/user/" + comment.user.id} style={{textDecoration: "none", color: "black"}}>
+                                                                        {comment.user.username}
+                                                                    </a>
+                                                                    &nbsp;:
+                                                                </b> {comment.content}
                                                             </p>
                                                             {
                                                                 principal.id === comment.user.id || principal.id === image.user.id ?

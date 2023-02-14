@@ -89,6 +89,12 @@ public class UserService {
         Path imageFilePath = Paths.get(uploadFolder + "\\profile\\" + imageFileName);
 
         try {
+            Files.createDirectories(Paths.get(uploadFolder + "\\profile\\"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
             // 통신, I/O(HDD read or write) -> 예외가 발생할 수 있다.
             Files.write(imageFilePath, profileImageFile.getBytes());
         } catch (Exception e) {
