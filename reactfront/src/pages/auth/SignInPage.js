@@ -62,10 +62,10 @@ const SignInPage = () => {
                             </div>
 
                             <div className="login__facebook">
-                                <button>
+                                <a href={"/oauth2/authorization/facebook"} style={{textDecoration: "none"}}>
                                     <FontAwesomeIcon icon={faFacebook} />
                                     <span>Facebook으로 로그인</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
 

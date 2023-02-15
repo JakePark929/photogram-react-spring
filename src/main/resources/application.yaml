@@ -30,6 +30,18 @@ spring:
       enabled: true
       max-file-size: 3MB
 
+  #security setting
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 1213080049393733
+            client-secret: 604f3e3885019d0497d27dc8181d5747
+            scope:
+              - public_profile
+              - email
+
 # file path
 file:
   path: C:\Users\epike\Documents\projects\photogram\upload\

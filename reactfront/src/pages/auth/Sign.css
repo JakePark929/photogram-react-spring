@@ -132,7 +132,7 @@ button {
     margin-top: 15px;
 }
 /*페이스북 로그인 버튼*/
-.login__facebook button {
+.login__facebook a {
     background-color: #fff;
     width: 100%;
     height: 30px;
@@ -141,7 +141,7 @@ button {
     font-size: 15px;
 }
 /*페이스북 로그인 색깔*/
-.login__facebook button span {
+.login__facebook a span {
     color: #385185;
     margin-left: 4px;
 }
