@@ -6,14 +6,6 @@ import {useSelector} from "react-redux";
 
 let page = 0;
 
-function comment() {
-    return (
-        <div>
-
-        </div>
-    )
-}
-
 const StoryPage = (props) => {
         const {ip, port} = useSelector((store) => store);
         const principal = props.principal;
@@ -241,7 +233,12 @@ const StoryPage = (props) => {
                                                              key={idx}
                                                         >
                                                             <p>
-                                                                <b>{comment.user.username} :</b> {comment.content}
+                                                                <b>
+                                                                    <a href={"/user/" + comment.user.id} style={{textDecoration: "none", color: "black"}}>
+                                                                        {comment.user.username}
+                                                                    </a>
+                                                                    &nbsp;:
+                                                                </b> {comment.content}
                                                             </p>
                                                             {
                                                                 principal.id === comment.user.id || principal.id === image.user.id ?

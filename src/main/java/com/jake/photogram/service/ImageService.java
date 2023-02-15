@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -41,6 +42,11 @@ public class ImageService {
 
         log.info("Caption: {}", request.getCaption());
         log.info("imageFileName: {}", imageFileName);
+        try {
+            Files.createDirectories(Paths.get(uploadFolder));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             // 통신, I/O(HDD read or write) -> 예외가 발생할 수 있다.
@@ -69,7 +75,7 @@ public class ImageService {
 
             image.getLikes().forEach((like) -> {
                 // 해당 이미지에 좋아요한 사람들을 찾아서 현재 로긴한 사람이 좋아요 한것인지 비교
-                if(like.getUser().getId() == principalId) {
+                if(Objects.equals(like.getUser().getId(), principalId)) {
                     image.setLikeState(true);
                 }
             });
