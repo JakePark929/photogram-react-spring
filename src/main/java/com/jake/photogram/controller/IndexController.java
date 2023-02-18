@@ -14,6 +14,11 @@ public class IndexController {
         return "/index.html";
     }
 
+    @GetMapping("/image/:id")
+    public String myStoryPage() {
+        return "/index.html";
+    }
+
     @GetMapping("/image/popular")
     public String PopularPage() { return "/index.html"; }
 

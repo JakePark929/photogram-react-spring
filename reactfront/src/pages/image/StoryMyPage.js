@@ -5,11 +5,13 @@ import {faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 
-let page = 0;
 
-const StoryPage = (props) => {
+const StoryMyPage = (props) => {
+        let page = 0;
         const {ip, port} = useSelector((store) => store);
         const principal = props.principal;
+        const url = useLocation().pathname;
+        let pageId = url.substring(url.lastIndexOf("/") + 1)
         const [data, setData] = useState({
             totalPages: "",
         });
@@ -84,7 +86,7 @@ const StoryPage = (props) => {
 
         // 페이지 불러오기 관련
         const getPage = () => {
-            fetch(ip + port + "/api/image?page=" + page).then(res => res.json()).then(res => {
+            fetch(ip + port + "/api/image/" + pageId + "?page=" + page).then(res => res.json()).then(res => {
                 setData(res.data);
                 setImages(res.data.content);
                 console.log(res.data.content);
@@ -97,7 +99,7 @@ const StoryPage = (props) => {
 
         // 무한 스크롤 관련
         const getNextPage = () => {
-            fetch(ip + port + "/api/image?page=" + page).then(res => res.json()).then(res => {
+            fetch(ip + port + "/api/image/" + pageId + "?page=" + page).then(res => res.json()).then(res => {
                 setImages([...images, ...res.data.content]);
             });
         }
@@ -194,7 +196,8 @@ const StoryPage = (props) => {
                                                      alt="profile image"
                                                 />
                                             </div>
-                                            <a href={"/user/" + image.user.id} style={{textDecoration: "none", color: "black"}}>
+                                            <a href={"/user/" + comment.user.id}
+                                               style={{textDecoration: "none", color: "black"}}>
                                                 <div>{image.user.username}</div>
                                             </a>
                                         </div>
@@ -237,7 +240,8 @@ const StoryPage = (props) => {
                                                         >
                                                             <p>
                                                                 <b>
-                                                                    <a href={"/user/" + comment.user.id} style={{textDecoration: "none", color: "black"}}>
+                                                                    <a href={"/user/" + comment.user.id}
+                                                                       style={{textDecoration: "none", color: "black"}}>
                                                                         {comment.user.username}
                                                                     </a>
                                                                     &nbsp;:
@@ -245,10 +249,10 @@ const StoryPage = (props) => {
                                                             </p>
                                                             {
                                                                 principal.id === comment.user.id || principal.id === image.user.id ?
-                                                                <button>
-                                                                    <FontAwesomeIcon icon={faTimes}
-                                                                                     onClick={() => commentRemove(image.id, comment.id)}/>
-                                                                </button>
+                                                                    <button>
+                                                                        <FontAwesomeIcon icon={faTimes}
+                                                                                         onClick={() => commentRemove(image.id, comment.id)}/>
+                                                                    </button>
                                                                     : ""
                                                             }
                                                         </div>
@@ -275,4 +279,4 @@ const StoryPage = (props) => {
     }
 ;
 
-export default StoryPage;
+export default StoryMyPage;

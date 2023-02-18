@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Profile.css'
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {faCog, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Modal} from "react-bootstrap";
@@ -253,18 +253,16 @@ const ProfilePage = (props) => {
                             {
                                 data.user.images === '' ? '' :
                                     data.user.images.map((image) =>
-                                        <div className="img-box">
-                                            <a href="">
+                                        <div className="img-box" onClick={() => navigate("/image/" + pageNumber)}>
                                                 <img
                                                     src={"/upload/" + image.postImageUrl}
                                                     alt="myImage"
                                                 />
-                                            </a>
-                                            <div className="comment">
-                                                <a href="#" className=""><FontAwesomeIcon icon={faHeart}/>
-                                                    <span>{image.likeCount}</span>
-                                                </a>
-                                            </div>
+                                                <div className="comment">
+                                                    <a href="#" className=""><FontAwesomeIcon icon={faHeart}/>
+                                                        <span>{image.likeCount}</span>
+                                                    </a>
+                                                </div>
                                         </div>)
                             }
                         </div>

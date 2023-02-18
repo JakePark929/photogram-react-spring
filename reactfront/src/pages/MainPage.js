@@ -7,6 +7,7 @@ import ProfilePage from "./user/ProfilePage";
 import UpdatePage from "./user/UpdatePage";
 import Header from "../component/Header";
 import {useSelector} from "react-redux";
+import StoryMyPage from "./image/StoryMyPage";
 
 const MainPage = () => {
     const {ip, port} = useSelector((store) => store);
@@ -28,6 +29,7 @@ const MainPage = () => {
             <Routes>
                 <Route path="/" exact={true} element={<StoryPage principal={principal}/>}/>
                 <Route path="/image/story" exact={true} element={<StoryPage principal={principal}/>}/>
+                <Route path="/image/:id" exact={true} element={<StoryMyPage principal={principal}/>}/>
                 <Route path="/image/popular" exact={true} element={<PopularPage/>}/>
                 <Route path="/image/upload" exact={true} element={<UploadPage principal={principal}/>}/>
                 <Route path={"/user/:id"} exact={true} element={<ProfilePage principal={principal}/>}/>
