@@ -29,12 +29,12 @@ public class Image {
 
     // 이미지 좋아요
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
     private List<Likes> likes;
 
     // 댓글
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image") // lazy loading
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL) // lazy loading
     private List<Comment> comments;
 
     @Transient // DB에 컬럼이 만들어 지지 않는다.

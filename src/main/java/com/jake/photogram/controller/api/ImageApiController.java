@@ -6,6 +6,7 @@ import com.jake.photogram.dto.CommonResponse;
 import com.jake.photogram.service.ImageService;
 import com.jake.photogram.service.LikesService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class ImageApiController {
@@ -31,13 +33,12 @@ public class ImageApiController {
         return new ResponseEntity<>(new CommonResponse<>(1, "스토리 불러오기 성공", images), HttpStatus.OK);
     }
 
-    @GetMapping("/api/image/{id}")
-    public ResponseEntity<?> imageMyStory(
-            @PathVariable Long id,
-            @PageableDefault(size = 3) Pageable pageable
+    @DeleteMapping("/api/image/{id}")
+    public ResponseEntity<?> imageDelete(
+            @PathVariable Long id
     ) {
-        Page<Image> images = imageService.imageMyStory(id, pageable);
-        return new ResponseEntity<>(new CommonResponse<>(1, "스토리 불러오기 성공", images), HttpStatus.OK);
+        imageService.deleteImage(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/api/image/popular")

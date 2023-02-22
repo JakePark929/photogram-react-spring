@@ -429,27 +429,32 @@
   flex-direction: row;
 }
 
+.backdrop-view{
+  z-index: 99;
+}
+
 .modal-view {
   position: fixed;
   padding-top: 6%;
-  left: -18%;
+  left: -20%;
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.001);
   display: none;
   align-items: center;
   justify-content: center;
+  z-index: 100;
 }
 
 .modal-view .view-image img{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  width: 450px;
-  height: 450px;
+  width: 30.1vw;
+  height: 63.1vh;
 }
 
 .modal-view .view-content {
-  height: 450px;
+  height: 63.1vh;
   background-color: #fff;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -458,7 +463,7 @@
 }
 .modal-view .view-content .view-contents {
   position: relative;
-  width: 350px;
+  width: 24vw;
   height: 100%;
 }
 .modal-view .view-content .view-header {
@@ -471,8 +476,8 @@
 .modal-view .view-content .view-header button {
   position: absolute;
   right: 15px;
-  top: 15px;
   background-color: transparent;
+  font-size: 19px;
   border: 0;
 }
 .modal-view .view-content .view-contents{
@@ -494,7 +499,6 @@
   position: relative;
   width: 100%;
 }
-
 .modal-view .view-content .view-comment-list .comment {
   display: flex;
   flex-direction: row;
@@ -502,17 +506,58 @@
   justify-content: space-between;
   margin: 3px;
 }
-
 .modal-view .view-content .view-comment-list .comment p {
   margin: 0;
 }
-
 .modal-view .view-content .view-comment-list .comment button {
   /*margin: 0px 10px 0px 10px;*/
   border: none;
   outline: none;
   background: #fff;
   cursor: pointer;
+}
+
+.backdrop-set {
+  z-index: 101;
+}
+
+.modal-post {
+  position: fixed;
+  padding-top: 12%;
+  left: -3%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.001);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 102;
+}
+.modal-post .modal-post-body {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-post .modal-post-body button {
+  border: 0;
+  color: black;
+  background-color: transparent;
+  height: 48px;
+  cursor: pointer;
+}
+
+.modal-post .modal-post-body > div > button {
+  border: 0;
+  color: black;
+  background-color: transparent;
+  height: 48px;
+  cursor: pointer;
+}
+
+.modal-post .modal-post-body button:not(:last-child) {
+  border-bottom: 1px solid #dbdbdb;
 }
 
 .profile__item__input {

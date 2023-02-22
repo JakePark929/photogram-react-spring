@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Profile.css'
 import {useLocation, useNavigate} from "react-router-dom";
-import {faCog, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faEllipsisVertical, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Modal} from "react-bootstrap";
 import {useSelector} from "react-redux";
@@ -218,15 +218,41 @@ const ProfilePage = (props) => {
             .then(res => {
                 if (res.status === 200) {
                     let copiedData = {...data};
-                    console.log(copiedData);
                     copiedData.user.images[imageIdx].comments
                         = copiedData.user.images[imageIdx].comments.filter(comment => comment.id !== commentId);
-                    console.log(copiedData);
                     setData(copiedData);
                 } else if (res.status === 400) {
                     alert("댓글 삭제 실패");
                 }
             })
+    }
+
+    // 게시글 삭제 관련
+    const deletePost = () => {
+        let imageId = data.user.images[imageIdx].id
+        fetch("/api/image/" + imageId, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    setImageIdx(0);
+                    closePostSetting();
+                    closeViewImage();
+                    let copiedData = {...data};
+                    copiedData.user.images = copiedData.user.images.filter(image => image.id !== imageId);
+                    setData(copiedData);
+                } else {
+                    alert("게시글 삭제에 실패하였습니다.");
+                }
+            })
+    }
+
+    // 파일 다운로드 관련
+    const imageDownload = () => {
+
     }
 
     // 모달 관련
@@ -248,6 +274,10 @@ const ProfilePage = (props) => {
         setImageIdx(Number(e.currentTarget.id));
         setViewImage(true);
     }
+
+    const [postSetting, setPostSetting] = useState(false);
+    const closePostSetting = () => setPostSetting(false);
+    const showPostSetting = () => setPostSetting(true);
 
     const showData = () => {
         console.log(data.user.images);
@@ -279,7 +309,6 @@ const ProfilePage = (props) => {
                                 alt="upload image"
                             />
                         </div>
-
                         {
                             saveState ?
                                 <div>
@@ -295,7 +324,6 @@ const ProfilePage = (props) => {
                     <div className="profile-right">
                         <div className="name-group">
                             <h2>{data.user.username}</h2>
-
                             {
                                 data.pageOwnerState ?
                                     <button className="cta" onClick={() => navigate("/image/upload")}>사진등록</button>
@@ -419,7 +447,8 @@ const ProfilePage = (props) => {
             </Modal>
 
             {/*게시글 모달*/}
-            <Modal className="modal-view" size="sm" show={viewImage} onHide={closeViewImage}>
+            <Modal className="modal-view" size="sm" show={viewImage} onHide={closeViewImage}
+                   backdropClassName={"backdrop-view"} id="modal-view">
                 <div className="view-image">
                     {
                         data.pageOwnerState !== '' && data.user.images[0] !== undefined ?
@@ -433,8 +462,8 @@ const ProfilePage = (props) => {
                 <Modal.Body className="view-content">
                     <div className="view-header">
                         <span>{data.user.username}</span>
-                        <button onClick={closeViewImage}>
-                            <FontAwesomeIcon icon={faTimes}/>
+                        <button onClick={showPostSetting}>
+                            <FontAwesomeIcon icon={faEllipsisVertical}/>
                         </button>
                     </div>
                     <div className="view-contents">
@@ -484,6 +513,32 @@ const ProfilePage = (props) => {
                             </button>
                         </div>
                     </div>
+                </Modal.Body>
+            </Modal>
+
+            {/*게시글 수정 모달*/}
+            <Modal className="modal-post" size="sm" show={postSetting} onHide={closePostSetting}
+                   backdropClassName={"backdrop-set"} id="modal-post">
+                <Modal.Body className="modal-post-body">
+                    {
+                        principal.id === data.user.id ?
+                        <button style={{color: "#F35369", fontWeight: 600}} onClick={deletePost}>
+                            게시글 삭제
+                        </button> : ""
+                    }
+                    {
+                        principal.id === data.user.id ?
+                        <button onClick={() => {
+                        }}>
+                            게시글 수정
+                        </button>  : ""
+                    }
+                    <button style={{color: "#77DD77", fontWeight: 600}} onClick={imageDownload}>
+                        사진 다운로드
+                    </button>
+                    <button onClick={closePostSetting}>
+                        취소
+                    </button>
                 </Modal.Body>
             </Modal>
         </>
