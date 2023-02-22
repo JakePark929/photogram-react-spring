@@ -31,6 +31,15 @@ public class ImageApiController {
         return new ResponseEntity<>(new CommonResponse<>(1, "스토리 불러오기 성공", images), HttpStatus.OK);
     }
 
+    @GetMapping("/api/image/{id}")
+    public ResponseEntity<?> imageMyStory(
+            @PathVariable Long id,
+            @PageableDefault(size = 3) Pageable pageable
+    ) {
+        Page<Image> images = imageService.imageMyStory(id, pageable);
+        return new ResponseEntity<>(new CommonResponse<>(1, "스토리 불러오기 성공", images), HttpStatus.OK);
+    }
+
     @GetMapping("/api/image/popular")
     public ResponseEntity<?> imagePopular(
     ) {

@@ -83,6 +83,25 @@ public class ImageService {
         return images;
     }
 
+    @Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서, 더티체킹, flush(반영)
+    public Page<Image> imageMyStory(Long principalId, Pageable pageable) {
+        Page<Image> images = imageRepository.findByUserId(principalId, pageable);
+
+        // 3(asd) 로그인
+        // images 에 좋아요 상태 담기
+        images.forEach((image)->{
+            image.setLikeCount(image.getLikes().size());
+
+            image.getLikes().forEach((like) -> {
+                // 해당 이미지에 좋아요한 사람들을 찾아서 현재 로긴한 사람이 좋아요 한것인지 비교
+                if(Objects.equals(like.getUser().getId(), principalId)) {
+                    image.setLikeState(true);
+                }
+            });
+        });
+        return images;
+    }
+
     @Transactional(readOnly = true)
     public List<Image> poplarImage() {
         return imageRepository.mPopular();

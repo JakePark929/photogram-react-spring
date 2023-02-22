@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Route, Routes, useLocation} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import StoryPage from "./image/StoryPage";
 import PopularPage from "./image/PopularPage";
 import UploadPage from "./image/UploadPage";

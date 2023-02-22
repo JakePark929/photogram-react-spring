@@ -24,4 +24,7 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
     // 구독자 수
     @Query(value = "SELECT COUNT(*) FROM subscribe WHERE fromUserId = :pageUserId", nativeQuery = true)
     int mSubscribeCount(@Param("pageUserId") Long pageUserId);
+
+    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE toUserId = :pageUserId", nativeQuery = true)
+    int mSubscribedCount(@Param("pageUserId") Long pageUserId);
 }
