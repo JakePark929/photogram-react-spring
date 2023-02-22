@@ -84,14 +84,15 @@ const StoryPage = (props) => {
 
         // 페이지 불러오기 관련
         const getPage = () => {
+            console.log(page);
             fetch(ip + port + "/api/image?page=" + page).then(res => res.json()).then(res => {
                 setData(res.data);
                 setImages(res.data.content);
-                console.log(res.data.content);
             });
         }
 
         useEffect(() => {
+            page = 0;
             getPage();
         }, []);
 
@@ -106,7 +107,7 @@ const StoryPage = (props) => {
             const onScrollFn = () => {
                 let checkNum = window.scrollY - (document.documentElement.scrollHeight - window.outerHeight);
 
-                if ((95 < checkNum && checkNum < 101) && page < data.totalPages) {
+                if ((95 < checkNum && checkNum < 101) && page < data.totalPages - 1) {
                     page = page + 1;
                     getNextPage();
                 }
@@ -155,8 +156,8 @@ const StoryPage = (props) => {
                 })
         }
 
+        // 댓글 삭제
         const commentRemove = (imageId, commentId) => {
-            console.log("삭제");
             fetch("/api/comment/" + commentId, {
                 method: "DELETE",
                 headers: {
@@ -165,14 +166,13 @@ const StoryPage = (props) => {
             })
                 .then(res => {
                     if (res.status === 200) {
+                        let image = images.find(i => i.id === imageId);
+                        image.comments = image.comments.filter(comment => comment.id !== commentId);
+                        setImages([...images, image]);
                     } else if (res.status === 400) {
                         alert("댓글 삭제 실패");
                     }
                 })
-
-            let image = images.find(i => i.id === imageId);
-            image.comments = image.comments.filter(comment => comment.id !== commentId);
-            setImages([...images, image]);
         }
 
         return (
@@ -194,7 +194,8 @@ const StoryPage = (props) => {
                                                      alt="profile image"
                                                 />
                                             </div>
-                                            <a href={"/user/" + image.user.id} style={{textDecoration: "none", color: "black"}}>
+                                            <a href={"/user/" + image.user.id}
+                                               style={{textDecoration: "none", color: "black"}}>
                                                 <div>{image.user.username}</div>
                                             </a>
                                         </div>
@@ -210,12 +211,12 @@ const StoryPage = (props) => {
                                                     <FontAwesomeIcon
                                                         icon={faHeart}
                                                         // className={select.includes(image.id) ? "likeButton active" : "likeButton"}
-                                                        className={image.likeState ? "likeButton active" : "likeButton"}
                                                         // onClick={() => {
                                                         //     !select.includes(image.id) ?
                                                         //         setSelect(() => [...select, image.id])
                                                         //         : setSelect(select.filter((value) => value !== image.id))
                                                         // }}
+                                                        className={image.likeState ? "likeButton active" : "likeButton"}
                                                         onClick={() => iLike(image.id)}
                                                     />
                                                 </button>
@@ -237,7 +238,8 @@ const StoryPage = (props) => {
                                                         >
                                                             <p>
                                                                 <b>
-                                                                    <a href={"/user/" + comment.user.id} style={{textDecoration: "none", color: "black"}}>
+                                                                    <a href={"/user/" + comment.user.id}
+                                                                       style={{textDecoration: "none", color: "black"}}>
                                                                         {comment.user.username}
                                                                     </a>
                                                                     &nbsp;:
@@ -245,10 +247,10 @@ const StoryPage = (props) => {
                                                             </p>
                                                             {
                                                                 principal.id === comment.user.id || principal.id === image.user.id ?
-                                                                <button>
-                                                                    <FontAwesomeIcon icon={faTimes}
-                                                                                     onClick={() => commentRemove(image.id, comment.id)}/>
-                                                                </button>
+                                                                    <button>
+                                                                        <FontAwesomeIcon icon={faTimes}
+                                                                                         onClick={() => commentRemove(image.id, comment.id)}/>
+                                                                    </button>
                                                                     : ""
                                                             }
                                                         </div>

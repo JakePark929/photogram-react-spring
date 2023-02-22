@@ -13,5 +13,6 @@ public class UserProfileResponse {
     private int imageCount;
     private boolean subscribeState;
     private int subscribeCount;
+    private int subscribedCount;
     private User user;
 }
