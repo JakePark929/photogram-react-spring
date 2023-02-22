@@ -202,11 +202,13 @@
   background: rgba(0, 0, 0, 0.6);
   opacity: 1;
 }
-#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a,#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a span{
-  color: #fff;
+#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a,#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a {
+  margin-right: 6px;
 }
-#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a i {
-  margin-right: 10px;
+#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a,#tab-content #tab-1-content .tab-1-content-inner .img-box .comment a span{
+  text-decoration: none;
+  margin-left: 5px;
+  color: #fff;
 }
 
 /* Sub2 */

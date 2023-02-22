@@ -43,6 +43,9 @@ public class Image {
     @Transient
     @Setter private int likeCount;
 
+    @Transient
+    @Setter private int commentCount;
+
     private LocalDateTime createDate;
     
     @PrePersist

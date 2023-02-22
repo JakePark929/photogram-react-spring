@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Profile.css'
 import {useLocation, useNavigate} from "react-router-dom";
-import {faCog, faEllipsisVertical, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faComment, faEllipsisVertical, faHeart, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Modal} from "react-bootstrap";
 import {useSelector} from "react-redux";
@@ -52,7 +52,8 @@ const ProfilePage = (props) => {
         caption: "",
         postImageUrl: "",
         createDate: "",
-        likeCount: ""
+        likeCount: "",
+        commentCount: ""
     });
 
     const changeProfileImage = () => {
@@ -193,12 +194,13 @@ const ProfilePage = (props) => {
                 let comment = res.data;
                 let copiedData = {...data};
                 copiedData.user.images[imageIdx].comments.push(comment);
+                copiedData.user.images[imageIdx].commentCount++;
                 setData(copiedData);
                 commentInput.value = "";
             })
     }
 
-    // 댓글 삭제관련
+    // 댓글 삭제 관련
     const showTimes = (commentId) => {
         setTimes([commentId]);
     }
@@ -220,6 +222,7 @@ const ProfilePage = (props) => {
                     let copiedData = {...data};
                     copiedData.user.images[imageIdx].comments
                         = copiedData.user.images[imageIdx].comments.filter(comment => comment.id !== commentId);
+                    copiedData.user.images[imageIdx].commentCount--;
                     setData(copiedData);
                 } else if (res.status === 400) {
                     alert("댓글 삭제 실패");
@@ -372,8 +375,13 @@ const ProfilePage = (props) => {
                                                 alt="myImage"
                                             />
                                             <div className="comment">
-                                                <a href="#" className=""><FontAwesomeIcon icon={faHeart}/>
+                                                <a href="#" className="">
+                                                    <FontAwesomeIcon icon={faHeart}/>
                                                     <span>{image.likeCount}</span>
+                                                </a>
+                                                <a href="#" className="">
+                                                    <FontAwesomeIcon icon={faComment}/>
+                                                    <span>{image.commentCount}</span>
                                                 </a>
                                             </div>
                                         </div>)
