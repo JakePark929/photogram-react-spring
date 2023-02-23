@@ -52,6 +52,10 @@ public class UserService {
             image.setLikeCount(image.getLikes().size());
         }));
 
+        userEntity.getImages().forEach((image -> {
+            image.setCommentCount(image.getComments().size());
+        }));
+
         return response;
     }
 

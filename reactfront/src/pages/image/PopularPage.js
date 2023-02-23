@@ -27,8 +27,8 @@ const PopularPage = () => {
                 <div className="popular-gallery">
                     {
                         Object.keys(images).length === 0 ? ""
-                            : images.map((image) =>
-                                <div className="p-img-box">
+                            : images.map((image, idx) =>
+                                <div key={idx} className="p-img-box">
                                     <Link to={"/user/" + image.user.id}>
                                         <img src={"/upload/" + image.postImageUrl}/>
                                     </Link>
