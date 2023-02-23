@@ -18,8 +18,66 @@
   grid-gap: 15px;
 }
 
+.popular .exploreContainer .popular-gallery .p-img-box {
+  position: relative;
+}
+
 .popular .exploreContainer .popular-gallery .p-img-box img {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.popular .exploreContainer .popular-gallery .p-img-box .p-comment {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  cursor: pointer;
+  opacity: 0;
+}
+.popular .exploreContainer .popular-gallery .p-img-box:hover .p-comment {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 20, 20, 0) 35%,
+    rgba(20, 20, 20, 0.4) 70%,
+    rgba(20, 20, 20, 0.8) 100%
+  );
+  opacity: 1;
+}
+
+.popular .exploreContainer .popular-gallery .p-img-box:hover .p-comment div {
+  margin-right: 8px;
+  margin-bottom: 19px;
+  color: white;
+  align-items: center;
+}
+
+.profile-image-box {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.popular .exploreContainer .popular-gallery .p-img-box:hover .p-comment div img {
+  transform: translate(0%, 5%);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 5px;
+}
+
+.like-comment-box {
+  padding-right: 12px;
+  padding-bottom: 2px;
+}
+
+.popular .exploreContainer .popular-gallery .p-img-box:hover .p-comment div span {
+  margin-left: 5px;
 }

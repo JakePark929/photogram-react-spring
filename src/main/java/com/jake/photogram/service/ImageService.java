@@ -94,6 +94,14 @@ public class ImageService {
 
     @Transactional(readOnly = true)
     public List<Image> poplarImage() {
+        List<Image> images = imageRepository.mPopular();
+
+        // 3(asd) 로그인
+        // images 에 좋아요 상태 담기
+        images.forEach((image)->{
+            image.setLikeCount(image.getLikes().size());
+            image.setCommentCount(image.getComments().size());
+        });
         return imageRepository.mPopular();
     }
 

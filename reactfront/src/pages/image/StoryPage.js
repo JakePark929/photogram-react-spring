@@ -84,7 +84,6 @@ const StoryPage = (props) => {
 
         // 페이지 불러오기 관련
         const getPage = () => {
-            console.log(page);
             fetch(ip + port + "/api/image?page=" + page).then(res => res.json()).then(res => {
                 setData(res.data);
                 setImages(res.data.content);
