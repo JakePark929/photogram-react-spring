@@ -311,6 +311,10 @@
   border-bottom: 1px solid #dbdbdb;
 }
 
+.modal-content {
+  flex-direction: row;
+}
+
 .modal-subscribe {
   position: fixed;
   padding-top: 5%;
@@ -323,7 +327,6 @@
   justify-content: center;
 }
 .modal-subscribe .subscribe {
-  width: 600px;
   height: 500px;
   background-color: #fff;
   border-radius: 10px;
@@ -340,7 +343,6 @@
 .modal-subscribe .subscribe .subscribe-header button {
   position: absolute;
   right: 15px;
-  top: 15px;
   background-color: transparent;
   border: 0;
 }
@@ -360,16 +362,13 @@
   width: 80px;
   text-align: center;
 }
-.modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__img {
-  width: 80px;
-  text-align: center;
-}
 .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__img img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__text {
+  width: 50px;
   padding-top: 5px;
 }
 .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__text h2 {
@@ -427,10 +426,6 @@
 }
 
 /*게시글 모달*/
-.modal-content {
-  flex-direction: row;
-}
-
 .backdrop-view{
   z-index: 99;
 }

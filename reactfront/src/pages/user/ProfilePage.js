@@ -435,7 +435,7 @@ const ProfilePage = (props) => {
                                 <h2>love</h2>
                             </div>
                             <div className="subscribe__btn">
-                                <button className="cta blue" onClick={unSubscribe}>구독취소</button>
+                                <button className="cta blue" onClick={()=>{}}>구독취소</button>
                             </div>
                         </div>
 
