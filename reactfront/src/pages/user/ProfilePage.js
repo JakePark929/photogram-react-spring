@@ -210,7 +210,6 @@ const ProfilePage = (props) => {
     }
 
     const commentRemove = (imageIdx, commentId) => {
-        console.log("삭제", imageIdx, commentId);
         fetch("/api/comment/" + commentId, {
             method: "DELETE",
             headers: {
