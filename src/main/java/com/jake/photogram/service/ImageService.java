@@ -8,11 +8,13 @@ import com.jake.photogram.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,6 +66,17 @@ public class ImageService {
 
         return 1;
     }
+
+    public InputStreamResource downloadImage(String filename) {
+        Path imageFilePath = Paths.get(uploadFolder + filename);
+        try {
+            return new InputStreamResource(new FileInputStream(imageFilePath.toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Transactional
     public void deleteImage(Long id) {
         try {
