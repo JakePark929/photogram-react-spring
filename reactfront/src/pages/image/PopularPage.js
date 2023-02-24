@@ -63,6 +63,34 @@ const PopularPage = () => {
             })
     }
 
+    // 파일 다운로드 관련
+    const imageDownload = (imageIdx) => {
+        const filename = images[imageIdx].postImageUrl;
+        fetch("/image/" + filename, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    res.blob().then(blob => download(blob, filename))
+                }
+            })
+    }
+
+    const download = (blob, filename) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+
     // 모달관련
     const [viewImage, setViewImage] = useState(false);
     const closeViewImage = () => setViewImage(false);
@@ -70,6 +98,10 @@ const PopularPage = () => {
         setImageIdx(Number(e.currentTarget.id));
         setViewImage(true);
     }
+
+    const [postSetting, setPostSetting] = useState(false);
+    const closePostSetting = () => setPostSetting(false);
+    const showPostSetting = () => setPostSetting(true);
 
     return (
         <main className="popular">
@@ -133,8 +165,7 @@ const PopularPage = () => {
                             <a href={images[0] !== undefined ? "/user/" + images[imageIdx].user.id : ""}>
                                 <label style={{cursor: "pointer"}}>{images[0] !== undefined ? images[imageIdx].user.username : ""}</label>
                             </a>
-                            <button onClick={() => {
-                            }}>
+                            <button onClick={showPostSetting}>
                                 <FontAwesomeIcon icon={faEllipsisVertical}/>
                             </button>
                         </div>
@@ -188,6 +219,19 @@ const PopularPage = () => {
                             </button>
                         </div>
                     </div>
+                </Modal.Body>
+            </Modal>
+
+            {/*게시글 다운 모달*/}
+            <Modal className="modal-post" size="sm" show={postSetting} onHide={closePostSetting}
+                   backdropClassName={"backdrop-set"} id="modal-post">
+                <Modal.Body className="modal-post-body">
+                    <button style={{color: "#77DD77", fontWeight: 600}} onClick={() => imageDownload(imageIdx)}>
+                        사진 다운로드
+                    </button>
+                    <button onClick={closePostSetting}>
+                        취소
+                    </button>
                 </Modal.Body>
             </Modal>
         </main>

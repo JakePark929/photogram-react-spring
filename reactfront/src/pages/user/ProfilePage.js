@@ -253,8 +253,31 @@ const ProfilePage = (props) => {
     }
 
     // 파일 다운로드 관련
-    const imageDownload = () => {
+    const imageDownload = (imageIdx) => {
+        const filename = data.user.images[imageIdx].postImageUrl;
+        fetch("/image/" + filename, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    res.blob().then(blob => download(blob, filename))
+                }
+            })
+    }
 
+    const download = (blob, filename) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
     }
 
     // 모달 관련
@@ -434,7 +457,9 @@ const ProfilePage = (props) => {
                                 <h2>love</h2>
                             </div>
                             <div className="subscribe__btn">
-                                <button className="cta blue" onClick={()=>{}}>구독취소</button>
+                                <button className="cta blue" onClick={() => {
+                                }}>구독취소
+                                </button>
                             </div>
                         </div>
 
@@ -468,9 +493,9 @@ const ProfilePage = (props) => {
                 </div>
                 <Modal.Body className="view-content">
                     <div className="view-header">
-                        <span>{data.user.username}</span>
+                        <span style={{paddingLeft: '20px'}}>{data.user.username}</span>
                         <button onClick={showPostSetting}>
-                            <FontAwesomeIcon icon={faEllipsisVertical}/>
+                            <FontAwesomeIcon style={{paddingBottom: '8px'}} icon={faEllipsisVertical}/>
                         </button>
                     </div>
                     <div className="view-contents">
@@ -529,18 +554,18 @@ const ProfilePage = (props) => {
                 <Modal.Body className="modal-post-body">
                     {
                         principal.id === data.user.id ?
-                        <button style={{color: "#F35369", fontWeight: 600}} onClick={deletePost}>
-                            게시글 삭제
-                        </button> : ""
+                            <button style={{color: "#F35369", fontWeight: 600}} onClick={deletePost}>
+                                게시글 삭제
+                            </button> : ""
                     }
                     {
                         principal.id === data.user.id ?
-                        <button onClick={() => {
-                        }}>
-                            게시글 수정
-                        </button>  : ""
+                            <button onClick={() => {
+                            }}>
+                                게시글 수정
+                            </button> : ""
                     }
-                    <button style={{color: "#77DD77", fontWeight: 600}} onClick={imageDownload}>
+                    <button style={{color: "#77DD77", fontWeight: 600}} onClick={() => imageDownload(imageIdx)}>
                         사진 다운로드
                     </button>
                     <button onClick={closePostSetting}>
